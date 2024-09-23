@@ -1,6 +1,9 @@
 body {
   font-family: 'Helvetica Neue', 'Helvetica', sans-serif;
 }
+.name_title{
+  text-align: center;
+}
 
 .socialmediaicons ul {
   margin: 0;
