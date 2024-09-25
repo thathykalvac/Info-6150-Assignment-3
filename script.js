@@ -19,8 +19,19 @@ function initializePage() {
 
 
 function toggleSelection(checkbox) {
+    const table = document.getElementById("myTable");
     const row = checkbox.closest('tr');
     const submitButton = document.getElementById("submitButton");
+    /*
+    const hiddenColumns = table.querySelectorAll(".extra-columns");
+
+    hiddenColumns.forEach(column => {
+        if (checkbox.checked) {
+            column.style.display = "table-cell";
+        } else {
+            column.style.display = "none";
+        }
+    });*/
 
     if (checkbox.checked) {
         row.style.backgroundColor = "yellow";
@@ -33,7 +44,30 @@ function toggleSelection(checkbox) {
         row.style.backgroundColor = "white";
         removeButtons(row);
         checkSubmitButtonStatus();
+        
     }
+}
+function toggleExtraColumns(checkbox) {
+    var row = checkbox.parentNode.parentNode;
+
+    var extraCols = row.querySelectorAll('.extra-columns');
+    var anyChecked = document.querySelectorAll('.row-checkbox:checked').length > 0;
+    var extraHeaders = document.querySelectorAll('th.extra-columns');
+
+    extraCols.forEach(function(col) {
+        if (checkbox.checked) {
+            col.style.display = 'table-cell'; 
+        } else {
+            col.style.display = 'none'; 
+        }
+    });
+    extraHeaders.forEach(function(header) {
+        if (anyChecked) {
+            header.style.display = 'table-cell'; 
+        } else {
+            header.style.display = 'none'; 
+        }
+    });
 }
 
 function addStudent() {
@@ -42,7 +76,7 @@ function addStudent() {
     const table = document.getElementById("myTable");
     const newRow = `
         <tr>
-            <td><input type="checkbox" onchange="toggleSelection(this)"/><br /><br /><img src="down.png" width="30px" onclick="toggleDropDown(this)" /></td>
+            <td><input type="checkbox" class="row-checkbox" onclick="toggleExtraColumns(this)" onchange="toggleSelection(this)"/><br /><br /><img src="down.png" width="30px" onclick="toggleDropDown(this)" /></td>
             <td>Student ${studentCount}</td>
             <td>Teacher ${studentCount}</td>
             <td>Approved</td>
@@ -50,8 +84,8 @@ function addStudent() {
             <td>TA</td>
             <td>${10000+studentCount}</td>
             <td>100%</td>
-            <td></td>
-            <td></td>
+            <td class="extra-columns"></td>
+            <td class="extra-columns"></td>
         </tr>
         <tr class="dropDownTextArea" style="display:none;">
             <td colspan="10">
@@ -131,7 +165,7 @@ function showEditPopup(row) {
             <p><strong>TA Status:</strong> ${taStatus}</p>
             <p><strong>Budget:</strong> ${budget}</p>
             <p><strong>Percentage:</strong> ${percentage}</p>
-            <button id="updateButton">Update</button>
+            <button id="okButton">Ok</button>
             <button id="cancelButton">Cancel</button>
         </div>
     `;
@@ -147,10 +181,8 @@ function showEditPopup(row) {
     popup.style.padding = '20px';
     popup.style.zIndex = '1000';
 
-    document.getElementById('updateButton').onclick = function () {
-        setTimeout(function() {
-            alert(`${studentName} data updated successfully`);
-        }, 10);
+    document.getElementById('okButton').onclick = function () {
+        
         closePopup(popup); 
     };
 
