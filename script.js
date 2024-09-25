@@ -28,6 +28,7 @@ function toggleSelection(checkbox) {
         submitButton.style.backgroundColor = "orange";
         addDeleteButton(row);
         addEditButton(row);
+        
     } else {
         row.style.backgroundColor = "white";
         removeButtons(row);
@@ -67,7 +68,7 @@ function addStudent() {
     table.insertAdjacentHTML('beforeend', newRow);
 
     setTimeout(function() {
-        alert(`Student ${studentCount} Record added successfully`);
+        alert(`Student ${studentCount} added successfully`);
     }, 10); 
 }
 
