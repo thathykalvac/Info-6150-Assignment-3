@@ -23,16 +23,6 @@ function toggleSelection(checkbox) {
     const table = document.getElementById("myTable");
     const row = checkbox.closest('tr');
     const submitButton = document.getElementById("submitButton");
-    /*
-    const hiddenColumns = table.querySelectorAll(".extra-columns");
-
-    hiddenColumns.forEach(column => {
-        if (checkbox.checked) {
-            column.style.display = "table-cell";
-        } else {
-            column.style.display = "none";
-        }
-    });*/
 
     if (checkbox.checked) {
         row.style.backgroundColor = "yellow";
