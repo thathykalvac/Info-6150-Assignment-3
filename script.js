@@ -10,6 +10,7 @@ return (this.mytitle);
 }
 
 let studentCount = 0;
+let activeCount=0;
 
 function initializePage() {
     document.getElementById('userName').innerText = "Thathykalva Charan Reddy";
@@ -72,6 +73,8 @@ function toggleExtraColumns(checkbox) {
 
 function addStudent() {
     studentCount++;
+    activeCount++;
+    console.log(activeCount);
 
     const table = document.getElementById("myTable");
     const newRow = `
@@ -118,18 +121,37 @@ function addDeleteButton(row) {
         deleteButton.innerText = "Delete";
         deleteButton.onclick = function () {
             const rowContent = row.cells[1].innerText;
+            const nextRow = row.nextElementSibling;
             row.remove();  
-            if (row.nextElementSibling) {
-                row.nextElementSibling.remove(); 
+            if (nextRow && nextRow.classList.contains('dropDownTextArea')) {
+                nextRow.remove(); 
+                
             }
             setTimeout(function() {
                 alert(`${rowContent} Record deleted successfully!`);
             }, 10);
-            
+            activeCount--;
+            var anyChecked = document.querySelectorAll('.row-checkbox:checked').length > 0;
+             var extraHeaders = document.querySelectorAll('th.extra-columns');
+            extraHeaders.forEach(function(header) {
+            if (activeCount=='0') {
+                header.style.display = 'none'; 
+        } 
+            extraHeaders.forEach(function(header) {
+                if (anyChecked) {
+                } else {
+                    header.style.display = 'none'; 
+                }
+            });
+    });
             checkSubmitButtonStatus();  
         };
         deleteCell.appendChild(deleteButton);
+        
     }
+    
+    
+    
 }
 
 function addEditButton(row) {
@@ -165,7 +187,7 @@ function showEditPopup(row) {
             <p><strong>TA Status:</strong> ${taStatus}</p>
             <p><strong>Budget:</strong> ${budget}</p>
             <p><strong>Percentage:</strong> ${percentage}</p>
-            <button id="okButton">Ok</button>
+            <button id="okButton">OK</button>
             <button id="cancelButton">Cancel</button>
         </div>
     `;
@@ -210,6 +232,7 @@ function checkSubmitButtonStatus() {
         submitButton.style.backgroundColor = "gray";
     }
 }
+
 var socialMedia = {
     facebook : 'http://facebook.com',
     twitter: 'http://twitter.com',
